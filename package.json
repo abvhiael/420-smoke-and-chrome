@@ -5,5 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "@420/gaming-sdk": "file:vendor/420-gaming-sdk"
   }
 }
