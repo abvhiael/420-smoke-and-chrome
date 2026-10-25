@@ -1,0 +1,21 @@
+name: MIG-3 Ecosystem Integration Level 2
+on:
+  push:
+    paths:
+      - '.github/workflows/mig-3-level2.yml'
+      - 'test/mig-3-level2.test.js'
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  level2:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Scoped MIG-3 ecosystem contract integration
+        run: |
+          npm install --ignore-scripts --offline
+          node --test test/mig-3-level2.test.js
