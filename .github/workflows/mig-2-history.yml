@@ -1,0 +1,27 @@
+name: MIG-2 Scoped Genesis History Preservation
+on:
+  push:
+    paths: ['.github/workflows/mig-2-history.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  history:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Archive scoped source commit history
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python -m pip install --quiet git-filter-repo
+          git clone https://github.com/abvhiael/420-integrated-v0.1.git /tmp/game-history
+          git -C /tmp/game-history filter-repo --force \
+          --path clients/smoke-chrome-access-v1/ \
+          --path docs/gaming/420GP-13-SMOKE-CHROME.md
+          test "$(git -C /tmp/game-history rev-list --count HEAD)" -ge 1
+          git -C /tmp/game-history remote add destination "https://x-access-token:${GH_TOKEN}@github.com/abvhiael/420-smoke-and-chrome.git"
+          git -C /tmp/game-history push destination HEAD:refs/heads/migration/filtered-genesis-history
