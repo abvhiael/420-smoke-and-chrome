@@ -2,7 +2,7 @@ import {
   AccessRequirement,
   createGamingClient420,
   evaluateAccessRequirement
-} from "../../../packages/420-gaming-sdk/src/index.js";
+} from "@420/gaming-sdk";
 
 export const SMOKE_CHROME_GAME_ID = "420/GAMING/GAME/SMOKE_AND_CHROME/V1";
 
